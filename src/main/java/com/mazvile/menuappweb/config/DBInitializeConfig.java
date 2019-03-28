@@ -22,21 +22,38 @@ public class DBInitializeConfig {
             Statement statement = connection.createStatement();
             statement.execute("DROP TABLE IF EXISTS UserLogin");
             statement.executeUpdate(
-                    "CREATE TABLE UserLogin(" +
-                            "id INTEGER Primary key, " +
-                            "userName varchar(30) not null," +
-                            "password varchar(30) not null," +
-                            "firstName varchar(30) not null, " +
-                            "lastName varchar(30) not null," +
-                            "email varchar(100) not null," +
-                            "mobile varchar(30) not null)"
+                    "CREATE TABLE Product(" +
+                            "Id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                            "Name VARCHAR(50) NOT NULL," +
+                            "Units VARCHAR(10) NOT NULL)"
             );
             statement.executeUpdate(
-                    "INSERT INTO UserLogin " +
-                            "(userName,password,firstName,lastName,email,mobile) " +
-                            "VALUES " + "('bharat0126','dbase123','Bharat','Verma',"
-                            + " 'bharatverma2488@gmail.com','8861456151')"
+                    "CREATE TABLE Supplies(" +
+                            "Product_Id INTEGER, " +
+                            "Quantity INTEGER NOT NULL," +
+                            "FOREIGN KEY(Product_Id) REFERENCES Product(Id))"
             );
+            statement.executeUpdate(
+                    "CREATE TABLE Recipe(" +
+                            "Id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                            "Name VARCHAR(50) NOT NULL," +
+                            "Description TEXT," +
+                            "Type VARCHAR(11) NOT NULL)"
+            );
+            statement.executeUpdate(
+                    "CREATE TABLE Product_List(" +
+                            "Recipe_Id INTEGER, " +
+                            "Product_Id INTEGER, " +
+                            "Quantity INTEGER NOT NULL," +
+                            "FOREIGN KEY(Recipe_Id) REFERENCES Recipe(Id)," +
+                            "FOREIGN KEY(Product_Id) REFERENCES Product(Id))"
+            );
+//            statement.executeUpdate(
+//                    "INSERT INTO UserLogin " +
+//                            "(userName,password,firstName,lastName,email,mobile) " +
+//                            "VALUES " + "('bharat0126','dbase123','Bharat','Verma',"
+//                            + " 'bharatverma2488@gmail.com','8861456151')"
+//            );
             statement.close();
             connection.close();
         }
