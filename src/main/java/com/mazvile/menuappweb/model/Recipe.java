@@ -4,6 +4,7 @@ import java.util.List;
 
 public class Recipe {
 
+    private Integer id;
     private String name;
     private RecipeType dishType;
     private List<Product> products;
