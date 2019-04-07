@@ -20,6 +20,14 @@ public class Product {
         quantity.setUnit(units);
     }
 
+    public Product(Integer id, String name, Units units, Integer quantity) {
+        this.name = name;
+        this.id = id;
+        this.quantity = new Quantity();
+        this.quantity.setUnit(units);
+        this.quantity.setValue(quantity);
+    }
+
     public String getName() {
         return name;
     }
@@ -34,5 +42,9 @@ public class Product {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public void setQuantityValue(int value) {
+        this.quantity.setValue(value);
     }
 }
