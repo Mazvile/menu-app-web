@@ -6,6 +6,7 @@ public class Recipe {
 
     private Integer id;
     private String name;
+    private String description;
     private RecipeType dishType;
     private List<Product> products;
 
@@ -21,6 +22,14 @@ public class Recipe {
 
     public String getName() {
         return name;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public String getDescription() {
+        return description;
     }
 
     public List<Product> getProducts() {

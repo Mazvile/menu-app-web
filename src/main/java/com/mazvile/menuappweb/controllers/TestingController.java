@@ -1,8 +1,11 @@
 package com.mazvile.menuappweb.controllers;
 
 import com.mazvile.menuappweb.dao.ProductsDAO;
+import com.mazvile.menuappweb.dao.RecipeDAO;
 import com.mazvile.menuappweb.dao.SuppliesDAO;
 import com.mazvile.menuappweb.model.Product;
+import com.mazvile.menuappweb.model.Recipe;
+import com.mazvile.menuappweb.model.RecipeType;
 import com.mazvile.menuappweb.model.Units;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,6 +21,9 @@ public class TestingController {
 
     @Autowired
     private SuppliesDAO suppliesDAO;
+
+    @Autowired
+    private RecipeDAO recipeDAO;
 
     @RequestMapping("/hello")
     public String hello() {
@@ -44,7 +50,14 @@ public class TestingController {
     public int supplies() {
         List<Product> products = productsDAO.getAllProducts();
         products.get(0).setQuantityValue(3);
-        int result = suppliesDAO.removeProduct(products.get(0));
-        return result;
+        return suppliesDAO.removeProduct(products.get(0));
+    }
+
+    @RequestMapping("/recipe")
+    public int addRecipe() {
+        List<Product> products = productsDAO.getAllProducts();
+        products.get(0).setQuantityValue(3);
+        Recipe recipe = new Recipe("Food", RecipeType.DESSERT, products);
+        return recipeDAO.addRecipe(recipe);
     }
 }
