@@ -60,4 +60,14 @@ public class TestingController {
         Recipe recipe = new Recipe("Food", RecipeType.DESSERT, products);
         return recipeDAO.addRecipe(recipe);
     }
+
+    @RequestMapping("/recipeUpdate")
+    public int updateRecipe() {
+        List<Product> products = productsDAO.getAllProducts();
+        products.get(0).setQuantityValue(3);
+        Recipe recipe = new Recipe("Food", RecipeType.DESSERT, products);
+        recipe.setDescription("Very nom nom nom dessert");
+        recipe.setId(2);
+        return recipeDAO.updateRecipe(recipe);
+    }
 }
