@@ -70,4 +70,9 @@ public class TestingController {
         recipe.setId(2);
         return recipeDAO.updateRecipe(recipe);
     }
+
+    @RequestMapping("/allRecipes")
+    public List<Recipe> getRecipes() {
+        return recipeDAO.getAllRecipes();
+    }
 }

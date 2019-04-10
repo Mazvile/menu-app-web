@@ -2,6 +2,8 @@ package com.mazvile.menuappweb.dao;
 
 import com.mazvile.menuappweb.model.Product;
 import com.mazvile.menuappweb.model.Recipe;
+import com.mazvile.menuappweb.model.RecipeType;
+import com.mazvile.menuappweb.model.Units;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -87,6 +89,36 @@ public class RecipeDAO {
     }
 
     public List<Recipe> getAllRecipes() {
-        return new ArrayList<>();
+        List<Recipe> recipes = new ArrayList<>();
+        try {
+            Connection connection = dataSource.getConnection();
+            Statement statement = connection.createStatement();
+            ResultSet recipeSet = statement.executeQuery("SELECT * FROM Recipe");
+            while (recipeSet.next()) {
+                Integer recipeId = recipeSet.getInt("Id");
+                String recipeName = recipeSet.getString("Name");
+                String recipeDescription = recipeSet.getString("Description");
+                String type = recipeSet.getString("Type");
+                RecipeType recipeType = RecipeType.valueOf(type);
+                List<Product> products = new ArrayList<>();
+                ResultSet productSet = statement.executeQuery("SELECT * FROM Product_List " +
+                        "JOIN Product ON Product.Id = Product_List.Product_Id " +
+                        "WHERE Recipe_Id = " + recipeId);
+                while (productSet.next()) {
+                    Integer productId = productSet.getInt("Product_Id");
+                    String productName = productSet.getString("Name");
+                    String units = productSet.getString("Units");
+                    Units productUnits = Units.valueOf(units);
+                    Integer suppliesQuantity = productSet.getInt("Quantity");
+                    products.add(new Product(productId, productName, productUnits, suppliesQuantity));
+                }
+                recipes.add(new Recipe(recipeId, recipeName, recipeDescription, recipeType, products));
+            }
+            statement.close();
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return recipes;
     }
 }

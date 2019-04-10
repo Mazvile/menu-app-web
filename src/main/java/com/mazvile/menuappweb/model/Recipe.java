@@ -16,6 +16,14 @@ public class Recipe {
         this.products = products;
     }
 
+    public Recipe(Integer id, String name, String description, RecipeType type, List<Product> products) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.dishType = type;
+        this.products = products;
+    }
+
     public RecipeType getDishType() {
         return dishType;
     }
