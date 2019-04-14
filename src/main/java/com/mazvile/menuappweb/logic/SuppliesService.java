@@ -11,13 +11,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class Supplies {
+public class SuppliesService {
 
     @Autowired
     private SuppliesDAO supplies;
 
-    public void addProduct(Product product) {
+    public void addSupply(Product product) {
         this.supplies.addProduct(product);
+    }
+
+    public void removeSupply(Product product) {
+        this.supplies.removeProduct(product);
     }
 
     public boolean canIMakeThisRecipe(Recipe recipe) {

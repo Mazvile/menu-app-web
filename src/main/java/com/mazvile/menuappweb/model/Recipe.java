@@ -10,8 +10,9 @@ public class Recipe {
     private RecipeType dishType;
     private List<Product> products;
 
-    public Recipe(String name, RecipeType type, List<Product> products) {
+    public Recipe(String name, String description, RecipeType type, List<Product> products) {
         this.name = name;
+        this.description = description;
         this.dishType = type;
         this.products = products;
     }

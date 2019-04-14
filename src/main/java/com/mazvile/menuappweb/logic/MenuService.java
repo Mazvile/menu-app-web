@@ -12,13 +12,13 @@ import java.util.List;
 import java.util.Random;
 
 @Component
-public class MenuGenerator {
+public class MenuService {
 
     @Autowired
-    private RecipeBook recipeBook;
+    private RecipeService recipeBook;
 
     @Autowired
-    private Supplies supplies;
+    private SuppliesService supplies;
 
     public Menu makeRandomMenu(
             int numberOfFishDishes,

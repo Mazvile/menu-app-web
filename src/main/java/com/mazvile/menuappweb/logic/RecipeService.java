@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class RecipeBook {
+public class RecipeService {
 
     @Autowired
     private RecipeDAO recipes;
@@ -31,9 +31,9 @@ public class RecipeBook {
         return filteredRecipes;
     }
 
-    public boolean addRecipe(String name, RecipeType type, List<Product> products) {
+    public boolean addRecipe(String name, String description, RecipeType type, List<Product> products) {
         if (!StringUtils.isBlank(name)) {
-            Recipe recipe = new Recipe(name, type, products);
+            Recipe recipe = new Recipe(name, description, type, products);
             recipes.addRecipe(recipe);
             return true;
         }
