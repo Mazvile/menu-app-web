@@ -1,26 +1,30 @@
 package com.mazvile.menuappweb.logic;
 
-
+import com.mazvile.menuappweb.dao.SuppliesDAO;
 import com.mazvile.menuappweb.model.Menu;
 import com.mazvile.menuappweb.model.Product;
 import com.mazvile.menuappweb.model.Recipe;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class Supplies {
 
-    private List<Product> supplies = new ArrayList<>();
+    @Autowired
+    private SuppliesDAO supplies;
 
     public void addProduct(Product product) {
-        this.supplies.add(product);
+        this.supplies.addProduct(product);
     }
 
     public boolean canIMakeThisRecipe(Recipe recipe) {
         List<Product> requiredProducts = recipe.getProducts();
         int counter = 0;
         for (Product product : requiredProducts) {
-            for (Product supply : supplies) {
+            for (Product supply : supplies.getAllSupplies()) {
                 if ((product.getName().equals(supply.getName())) && (product.getQuantity().getValue() <= supply.getQuantity().getValue())) {
                     counter++;
                 }
@@ -45,7 +49,7 @@ public class Supplies {
     private List<Product> subtractSupplies(List<Product> productsNeeded) {
         List<Product> result = new ArrayList<>();
         for (Product product : productsNeeded) {
-            for (Product supply : supplies) {
+            for (Product supply : supplies.getAllSupplies()) {
                 if (product.getName().equals(supply.getName())) {
                     int val1 = product.getQuantity().getValue();
                     int val2 = supply.getQuantity().getValue();

@@ -4,18 +4,21 @@ package com.mazvile.menuappweb.logic;
 import com.mazvile.menuappweb.model.Menu;
 import com.mazvile.menuappweb.model.Recipe;
 import com.mazvile.menuappweb.model.RecipeType;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+@Component
 public class MenuGenerator {
 
+    @Autowired
     private RecipeBook recipeBook;
 
-    public MenuGenerator(RecipeBook recipeBook) {
-        this.recipeBook = recipeBook;
-    }
+    @Autowired
+    private Supplies supplies;
 
     public Menu makeRandomMenu(
             int numberOfFishDishes,
@@ -50,7 +53,7 @@ public class MenuGenerator {
         return selectedDishes;
     }
 
-    public List<Recipe> getRecipesFromProductsFromSupplies(Supplies supplies) {
+    public List<Recipe> getRecipesFromProductsFromSupplies() {
         List<Recipe> possibleRecipes = new ArrayList<>();
         for (Recipe recipe : recipeBook.getRecipes()) {
             if (supplies.canIMakeThisRecipe(recipe)) {
