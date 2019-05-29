@@ -65,7 +65,11 @@ public class ProductsDAO {
                 String productName = resultSet.getString("Name");
                 String productUnits = resultSet.getString("Units");
                 Units units = Units.valueOf(productUnits);
-                products.add(new Product(productId, productName, units));
+                products.add(Product.ProductBuilder.aProduct()
+                .withId(productId)
+                .withName(productName)
+                .withUnits(units)
+                .build());
             }
             statement.close();
             connection.close();

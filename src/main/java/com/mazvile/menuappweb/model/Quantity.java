@@ -5,6 +5,11 @@ public class Quantity {
     private int value;
     private Units unit;
 
+    public Quantity(int value, Units unit) {
+        this.value = value;
+        this.unit = unit;
+    }
+
     public int getValue() {
         return value;
     }

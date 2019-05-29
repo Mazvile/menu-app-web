@@ -1,9 +1,6 @@
 package com.mazvile.menuappweb.dao;
 
-import com.mazvile.menuappweb.model.Product;
-import com.mazvile.menuappweb.model.Recipe;
-import com.mazvile.menuappweb.model.RecipeType;
-import com.mazvile.menuappweb.model.Units;
+import com.mazvile.menuappweb.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -110,9 +107,19 @@ public class RecipeDAO {
                     String units = productSet.getString("Units");
                     Units productUnits = Units.valueOf(units);
                     Integer suppliesQuantity = productSet.getInt("Quantity");
-                    products.add(new Product(productId, productName, productUnits, suppliesQuantity));
+                    products.add(Product.ProductBuilder.aProduct()
+                            .withId(productId)
+                            .withName(productName)
+                            .withQuantity(new Quantity(suppliesQuantity, productUnits))
+                            .build());
                 }
-                recipes.add(new Recipe(recipeId, recipeName, recipeDescription, recipeType, products));
+                recipes.add(Recipe.RecipeBuilder.aRecipe()
+                        .withId(recipeId)
+                        .withName(recipeName)
+                        .withDescription(recipeDescription)
+                        .withDishType(recipeType)
+                        .withProducts(products)
+                        .build());
             }
             statement.close();
             connection.close();

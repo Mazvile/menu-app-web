@@ -42,7 +42,11 @@ public class SuppliesService {
         List<Product> productsNeeded = new ArrayList<>();
         for (Recipe recipe : menuRecipes) {
             for (Product product : recipe.getProducts()) {
-                Product copy = new Product(product.getName(), product.getQuantity().getValue(), product.getQuantity().getUnit());
+                Product copy = Product.ProductBuilder.aProduct()
+                        .withName(product.getName())
+                        .withValue(product.getQuantity().getValue())
+                        .withUnits(product.getQuantity().getUnit())
+                        .build();
                 productsNeeded.add(copy);
             }
         }

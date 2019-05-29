@@ -33,7 +33,12 @@ public class RecipeService {
 
     public boolean addRecipe(String name, String description, RecipeType type, List<Product> products) {
         if (!StringUtils.isBlank(name)) {
-            Recipe recipe = new Recipe(name, description, type, products);
+            Recipe recipe = Recipe.RecipeBuilder.aRecipe()
+                    .withName(name)
+                    .withDescription(description)
+                    .withDishType(type)
+                    .withProducts(products)
+                    .build();
             recipes.addRecipe(recipe);
             return true;
         }

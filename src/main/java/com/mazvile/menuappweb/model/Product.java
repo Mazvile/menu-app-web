@@ -6,28 +6,6 @@ public class Product {
     private String name;
     private Quantity quantity;
 
-    public Product(String name, int value, Units units) {
-        this.name = name;
-        this.quantity = new Quantity();
-        quantity.setValue(value);
-        quantity.setUnit(units);
-    }
-
-    public Product(Integer id, String name, Units units) {
-        this.name = name;
-        this.id = id;
-        this.quantity = new Quantity();
-        quantity.setUnit(units);
-    }
-
-    public Product(Integer id, String name, Units units, Integer quantity) {
-        this.name = name;
-        this.id = id;
-        this.quantity = new Quantity();
-        this.quantity.setUnit(units);
-        this.quantity.setValue(quantity);
-    }
-
     public String getName() {
         return name;
     }
@@ -46,5 +24,51 @@ public class Product {
 
     public void setQuantityValue(int value) {
         this.quantity.setValue(value);
+    }
+
+    public static final class ProductBuilder {
+        private Integer id;
+        private String name;
+        private Quantity quantity;
+
+        private ProductBuilder() {
+        }
+
+        public static ProductBuilder aProduct() {
+            return new ProductBuilder();
+        }
+
+        public ProductBuilder withId(Integer id) {
+            this.id = id;
+            return this;
+        }
+
+        public ProductBuilder withName(String name) {
+            this.name = name;
+            return this;
+        }
+
+        public ProductBuilder withQuantity(Quantity quantity) {
+            this.quantity = quantity;
+            return this;
+        }
+
+        public ProductBuilder withUnits(Units units) {
+            this.quantity.setUnit(units);
+            return this;
+        }
+
+        public ProductBuilder withValue(int value) {
+            this.quantity.setValue(value);
+            return this;
+        }
+
+        public Product build() {
+            Product product = new Product();
+            product.setId(id);
+            product.quantity = this.quantity;
+            product.name = this.name;
+            return product;
+        }
     }
 }

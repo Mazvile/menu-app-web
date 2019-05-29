@@ -83,8 +83,13 @@ public class SuppliesDAO {
                 String suppliesName = resultSet.getString("Name");
                 String suppliesUnits = resultSet.getString("Units");
                 Units units = Units.valueOf(suppliesUnits);
-                Integer suppliesQuantity = resultSet.getInt("Quantity");
-                supplies.add(new Product(suppliesId, suppliesName, units, suppliesQuantity));
+                Integer suppliesValue = resultSet.getInt("Quantity");
+                supplies.add(Product.ProductBuilder.aProduct()
+                        .withId(suppliesId)
+                        .withName(suppliesName)
+                        .withUnits(units)
+                        .withValue(suppliesValue)
+                        .build());
             }
             statement.close();
             connection.close();
