@@ -5,12 +5,12 @@ import com.mazvile.menuappweb.model.Menu;
 import com.mazvile.menuappweb.model.Product;
 import com.mazvile.menuappweb.model.Recipe;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Component
+@Service
 public class SuppliesService {
 
     @Autowired
@@ -29,7 +29,8 @@ public class SuppliesService {
         int counter = 0;
         for (Product product : requiredProducts) {
             for (Product supply : supplies.getAllSupplies()) {
-                if ((product.getName().equals(supply.getName())) && (product.getQuantity().getValue() <= supply.getQuantity().getValue())) {
+                if ((product.getId().equals(supply.getId())) &&
+                        (product.getQuantity().getValue() <= supply.getQuantity().getValue())) {
                     counter++;
                 }
             }
@@ -41,14 +42,7 @@ public class SuppliesService {
         List<Recipe> menuRecipes = menu.getMenuRecipes();
         List<Product> productsNeeded = new ArrayList<>();
         for (Recipe recipe : menuRecipes) {
-            for (Product product : recipe.getProducts()) {
-                Product copy = Product.ProductBuilder.aProduct()
-                        .withName(product.getName())
-                        .withValue(product.getQuantity().getValue())
-                        .withUnits(product.getQuantity().getUnit())
-                        .build();
-                productsNeeded.add(copy);
-            }
+            productsNeeded.addAll(recipe.getProducts());
         }
         List<Product> optimizedProducts = sumSameProducts(productsNeeded);
         return subtractSupplies(optimizedProducts);
@@ -58,7 +52,7 @@ public class SuppliesService {
         List<Product> result = new ArrayList<>();
         for (Product product : productsNeeded) {
             for (Product supply : supplies.getAllSupplies()) {
-                if (product.getName().equals(supply.getName())) {
+                if (product.getId().equals(supply.getId())) {
                     int val1 = product.getQuantity().getValue();
                     int val2 = supply.getQuantity().getValue();
 
@@ -78,7 +72,7 @@ public class SuppliesService {
             Product productTaken = products.remove(0);
             boolean alreadyInList = false;
             for (Product optProduct : optimizedProductList) {
-                if (productTaken.getName().equals(optProduct.getName())) {
+                if (productTaken.getId().equals(optProduct.getId())) {
                     int val1 = optProduct.getQuantity().getValue();
                     int val2 = productTaken.getQuantity().getValue();
                     optProduct.getQuantity().setValue(val1 + val2);
