@@ -64,7 +64,7 @@ public class MenuService {
         return selectedDishes;
     }
 
-    public List<Recipe> getRecipesFromProductsFromSupplies() {
+    public List<Recipe> getAvailableRecipes() {
         return recipeBook.getRecipes()
                 .stream()
                 .filter(recipe -> supplies.canIMakeThisRecipe(recipe))
