@@ -24,6 +24,10 @@ public class SuppliesService {
         this.supplies.removeProduct(product);
     }
 
+    public List<Product> getAllSupplies() {
+        return supplies.getAllSupplies();
+    }
+
     public boolean canIMakeThisRecipe(Recipe recipe) {
         List<Product> requiredProducts = recipe.getProducts();
         int counter = 0;
