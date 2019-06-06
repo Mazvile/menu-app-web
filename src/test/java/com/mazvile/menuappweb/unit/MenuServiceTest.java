@@ -29,43 +29,6 @@ public class MenuServiceTest {
     private MenuService service;
 
     @Test
-    public void makeRandomMenuShoudReturnOneFishDish() {
-        List<Recipe> fishDishes = Arrays.asList(Recipe.RecipeBuilder.aRecipe().withDishType(RecipeType.FISH).build());
-
-        when(recipeBook.getRecipeByType(RecipeType.FISH)).thenReturn(fishDishes);
-
-        Menu result = service.makeRandomMenu(1, 0, 0, 0);
-
-        assertEquals(1, result.getMenuRecipes().size());
-        assertEquals(RecipeType.FISH, result.getMenuRecipes().get(0).getDishType());
-    }
-
-    @Test
-    public void makeRandomMenuShouldReturnSameFishDishTwice() {
-        List<Recipe> fishDishes = Arrays.asList(Recipe.RecipeBuilder.aRecipe().withDishType(RecipeType.FISH).build());
-
-        when(recipeBook.getRecipeByType(RecipeType.FISH)).thenReturn(fishDishes);
-
-        Menu result = service.makeRandomMenu(2, 0, 0, 0);
-
-        assertEquals(2, result.getMenuRecipes().size());
-        assertEquals(result.getMenuRecipes().get(0), result.getMenuRecipes().get(1));
-    }
-
-    @Test
-    public void makeRandomMenuShouldReturnDifferentFishDishes() {
-        List<Recipe> fishDishes = Arrays.asList(Recipe.RecipeBuilder.aRecipe().withDishType(RecipeType.FISH).build(),
-                Recipe.RecipeBuilder.aRecipe().withDishType(RecipeType.FISH).build());
-
-        when(recipeBook.getRecipeByType(RecipeType.FISH)).thenReturn(fishDishes);
-
-        Menu result = service.makeRandomMenu(2, 0, 0, 0);
-
-        assertEquals(2, result.getMenuRecipes().size());
-        assertNotEquals(result.getMenuRecipes().get(0), result.getMenuRecipes().get(1));
-    }
-
-    @Test
     public void makeRandomMenuShouldReturnEmptyListIfNumberOfDishWasZero() {
         Menu result = service.makeRandomMenu(0);
 
