@@ -38,7 +38,6 @@ public class ProductServiceTest {
     public void addProductWithExistingNameShouldReturnFalse() {
         List<Product> products = Arrays.asList(Product.ProductBuilder.aProduct().withName("Flour").build());
         when(productsDAO.getAllProducts()).thenReturn(products);
-        when(productsDAO.insertProduct(any(Product.class))).thenReturn(1);
         assertFalse(service.addProduct("Flour", Units.GRAMS));
         assertFalse(service.addProduct("flour", Units.GRAMS));
         assertFalse(service.addProduct(" Flour ", Units.GRAMS));
