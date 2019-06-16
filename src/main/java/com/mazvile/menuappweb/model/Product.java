@@ -29,7 +29,7 @@ public class Product {
     public static final class ProductBuilder {
         private Integer id;
         private String name;
-        private Quantity quantity;
+        private Quantity quantity = new Quantity();
 
         private ProductBuilder() {
         }

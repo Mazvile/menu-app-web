@@ -5,6 +5,8 @@ public class Quantity {
     private int value;
     private Units unit;
 
+    public Quantity() {}
+
     public Quantity(int value, Units unit) {
         this.value = value;
         this.unit = unit;
