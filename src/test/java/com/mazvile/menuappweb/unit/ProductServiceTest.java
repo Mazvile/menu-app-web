@@ -4,8 +4,6 @@ import com.mazvile.menuappweb.dao.ProductsDAO;
 import com.mazvile.menuappweb.logic.ProductService;
 
 import com.mazvile.menuappweb.model.Product;
-import com.mazvile.menuappweb.model.Recipe;
-import com.mazvile.menuappweb.model.RecipeType;
 import com.mazvile.menuappweb.model.Units;
 import org.junit.Test;
 import org.junit.runner.RunWith;

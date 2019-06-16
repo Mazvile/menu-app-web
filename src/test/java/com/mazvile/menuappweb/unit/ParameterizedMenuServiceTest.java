@@ -107,5 +107,4 @@ public class ParameterizedMenuServiceTest {
         assertEquals(2, result.getMenuRecipes().size());
         assertNotEquals(result.getMenuRecipes().get(0), result.getMenuRecipes().get(1));
     }
-
 }

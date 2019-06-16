@@ -150,5 +150,4 @@ public class MenuServiceTest {
         List<Recipe> result = service.getAvailableRecipes();
         assertEquals(1, result.size());
     }
-
 }
