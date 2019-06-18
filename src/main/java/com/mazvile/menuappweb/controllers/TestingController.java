@@ -7,6 +7,8 @@ import com.mazvile.menuappweb.model.Product;
 import com.mazvile.menuappweb.model.Recipe;
 import com.mazvile.menuappweb.model.Units;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -24,18 +26,7 @@ public class TestingController {
     @Autowired
     private RecipeDAO recipeDAO;
 
-//    @RequestMapping("/hello")
-//    public String hello() {
-//        Product paprika = new Product("Paprika", 2, Units.PCS);
-//        int result = productsDAO.insertProduct(paprika);
-//        if (result == 1) {
-//            return "Pridėjau";
-//        } else {
-//            return "Nepridėjau";
-//        }
-//    }
-
-    @RequestMapping("/products")
+    @GetMapping("/products")
     public List<Product> products() {
         return productsDAO.getAllProducts();
     }
@@ -50,6 +41,16 @@ public class TestingController {
         List<Product> products = productsDAO.getAllProducts();
         products.get(0).setQuantityValue(3);
         return suppliesDAO.removeProduct(products.get(0));
+    }
+
+    @GetMapping("/test")
+    public String testGetMessage() {
+        return productsDAO.getAllProducts().get(0).getName();
+    }
+
+    @PostMapping("/test")
+    public int testPostMessage() {
+        return productsDAO.insertProduct(Product.ProductBuilder.aProduct().withName("Potato").withUnits(Units.PCS).build());
     }
 
 //    @RequestMapping("/recipe")
