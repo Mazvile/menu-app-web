@@ -3,6 +3,7 @@ package com.mazvile.menuappweb.logic;
 import com.mazvile.menuappweb.dao.ProductsDAO;
 import com.mazvile.menuappweb.model.Product;
 import com.mazvile.menuappweb.model.Units;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +18,12 @@ public class ProductService {
     ProductsDAO productsDAO;
 
     public boolean addProduct(String name, Units units) {
+        if (units == null) {
+            throw new IllegalArgumentException("Units cannot be null");
+        }
+        if (name == null || StringUtils.isBlank(name)) {
+            throw new IllegalArgumentException("Name cannot be null or blank");
+        }
         for (Product product : productsDAO.getAllProducts()) {
             if (product.getName().equalsIgnoreCase(name.trim())) {
                 return false;

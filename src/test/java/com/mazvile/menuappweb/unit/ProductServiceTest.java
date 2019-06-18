@@ -42,4 +42,24 @@ public class ProductServiceTest {
         assertFalse(service.addProduct("flour", Units.GRAMS));
         assertFalse(service.addProduct(" Flour ", Units.GRAMS));
     }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void addProductWithNullUnitsShouldThrowException() {
+        service.addProduct("Flour", null);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void addProductWithNullNameShouldThrowException() {
+        service.addProduct(null, Units.PCS);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void addProductWithBlankNameShouldThrowException() {
+        service.addProduct(" ", Units.PCS);
+    }
+
+    @Test
+    public void addProductShouldReturnFalseIfProductWasNotInserted() {
+
+    }
 }
