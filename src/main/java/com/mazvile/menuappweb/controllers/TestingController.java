@@ -1,8 +1,8 @@
 package com.mazvile.menuappweb.controllers;
 
-import com.mazvile.menuappweb.dao.ProductsDAO;
-import com.mazvile.menuappweb.dao.RecipeDAO;
-import com.mazvile.menuappweb.dao.SuppliesDAO;
+import com.mazvile.menuappweb.repository.ProductRepository;
+import com.mazvile.menuappweb.repository.RecipeRepository;
+import com.mazvile.menuappweb.repository.SupplyRepository;
 import com.mazvile.menuappweb.model.Product;
 import com.mazvile.menuappweb.model.Recipe;
 import com.mazvile.menuappweb.model.Units;
@@ -18,61 +18,61 @@ import java.util.List;
 public class TestingController {
 
     @Autowired
-    private ProductsDAO productsDAO;
+    private ProductRepository productRepository;
 
     @Autowired
-    private SuppliesDAO suppliesDAO;
+    private SupplyRepository supplyRepository;
 
     @Autowired
-    private RecipeDAO recipeDAO;
+    private RecipeRepository recipeRepository;
 
     @GetMapping("/products")
     public List<Product> products() {
-        return productsDAO.getAllProducts();
+        return productRepository.getAllProducts();
     }
 
     @RequestMapping("/suppliesList")
     public List<Product> suppliesList() {
-        return suppliesDAO.getAllSupplies();
+        return supplyRepository.getAllSupplies();
     }
 
     @RequestMapping("/supplies")
     public int supplies() {
-        List<Product> products = productsDAO.getAllProducts();
+        List<Product> products = productRepository.getAllProducts();
         products.get(0).setQuantityValue(3);
-        return suppliesDAO.removeProduct(products.get(0));
+        return supplyRepository.removeProduct(products.get(0));
     }
 
     @GetMapping("/test")
     public String testGetMessage() {
-        return productsDAO.getAllProducts().get(0).getName();
+        return productRepository.getAllProducts().get(0).getName();
     }
 
     @PostMapping("/test")
     public int testPostMessage() {
-        return productsDAO.insertProduct(Product.ProductBuilder.aProduct().withName("Potato").withUnits(Units.PCS).build());
+        return productRepository.insertProduct(Product.ProductBuilder.aProduct().withName("Potato").withUnits(Units.PCS).build());
     }
 
 //    @RequestMapping("/recipe")
 //    public int addRecipe() {
-//        List<Product> products = productsDAO.getAllProducts();
+//        List<Product> products = productRepository.getAllProducts();
 //        products.get(0).setQuantityValue(3);
 //        Recipe recipe = new Recipe("Food", "...", RecipeType.DESSERT, products);
-//        return recipeDAO.addRecipe(recipe);
+//        return recipeRepository.addRecipe(recipe);
 //    }
 //
 //    @RequestMapping("/recipeUpdate")
 //    public int updateRecipe() {
-//        List<Product> products = productsDAO.getAllProducts();
+//        List<Product> products = productRepository.getAllProducts();
 //        products.get(0).setQuantityValue(3);
 //        Recipe recipe = new Recipe("Food", "...", RecipeType.DESSERT, products);
 //        recipe.setDescription("Very nom nom nom dessert");
 //        recipe.setId(2);
-//        return recipeDAO.updateRecipe(recipe);
+//        return recipeRepository.updateRecipe(recipe);
 //    }
 
     @RequestMapping("/allRecipes")
     public List<Recipe> getRecipes() {
-        return recipeDAO.getAllRecipes();
+        return recipeRepository.getAllRecipes();
     }
 }

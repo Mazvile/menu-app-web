@@ -1,8 +1,8 @@
 package com.mazvile.menuappweb.unit;
 
-import com.mazvile.menuappweb.logic.MenuService;
-import com.mazvile.menuappweb.logic.RecipeService;
-import com.mazvile.menuappweb.logic.SuppliesService;
+import com.mazvile.menuappweb.service.menu.MenuServiceImpl;
+import com.mazvile.menuappweb.service.recipe.RecipeServiceImpl;
+import com.mazvile.menuappweb.service.supply.SupplyServiceImpl;
 import com.mazvile.menuappweb.model.*;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -20,13 +20,13 @@ import static org.mockito.Mockito.when;
 public class MenuServiceTest {
 
     @Mock
-    private RecipeService recipeBook;
+    private RecipeServiceImpl recipeBook;
 
     @Mock
-    private SuppliesService supplies;
+    private SupplyServiceImpl supplies;
 
     @InjectMocks
-    private MenuService service;
+    private MenuServiceImpl service;
 
     @Test
     public void makeRandomMenuShouldReturnEmptyListIfNumberOfDishWasZero() {
@@ -119,7 +119,7 @@ public class MenuServiceTest {
         List<Recipe> recipes = Arrays.asList(Recipe.RecipeBuilder.aRecipe().build());
 
         when(supplies.canIMakeThisRecipe(recipes.get(0))).thenReturn(true);
-        when(recipeBook.getRecipes()).thenReturn(recipes);
+        when(recipeBook.getRecipeRepository()).thenReturn(recipes);
 
         List<Recipe> result = service.getAvailableRecipes();
         assertEquals(recipes, result);
@@ -132,7 +132,7 @@ public class MenuServiceTest {
         List<Recipe> recipes = Arrays.asList(Recipe.RecipeBuilder.aRecipe().build());
 
         when(supplies.canIMakeThisRecipe(recipes.get(0))).thenReturn(false);
-        when(recipeBook.getRecipes()).thenReturn(recipes);
+        when(recipeBook.getRecipeRepository()).thenReturn(recipes);
 
         List<Recipe> result = service.getAvailableRecipes();
         assertEquals(0, result.size());
@@ -145,7 +145,7 @@ public class MenuServiceTest {
 
         when(supplies.canIMakeThisRecipe(recipes.get(0))).thenReturn(true);
         when(supplies.canIMakeThisRecipe(recipes.get(1))).thenReturn(false);
-        when(recipeBook.getRecipes()).thenReturn(recipes);
+        when(recipeBook.getRecipeRepository()).thenReturn(recipes);
 
         List<Recipe> result = service.getAvailableRecipes();
         assertEquals(1, result.size());

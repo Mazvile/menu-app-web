@@ -1,35 +1,41 @@
-package com.mazvile.menuappweb.logic;
+package com.mazvile.menuappweb.service.recipe;
 
-import com.mazvile.menuappweb.dao.RecipeDAO;
 import com.mazvile.menuappweb.model.Product;
 import com.mazvile.menuappweb.model.Recipe;
 import com.mazvile.menuappweb.model.RecipeType;
+import com.mazvile.menuappweb.repository.RecipeRepository;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class RecipeService {
+public class RecipeServiceImpl implements RecipeService {
 
-    @Autowired
-    private RecipeDAO recipes;
+    private final RecipeRepository recipeRepository;
 
-    public List<Recipe> getRecipes() {
-        return recipes.getAllRecipes();
+    public RecipeServiceImpl(final RecipeRepository recipeRepository) {
+        this.recipeRepository = recipeRepository;
     }
 
-    public List<Recipe> getRecipeByType(RecipeType type) {
-        return recipes.getAllRecipes()
+    @Override
+    public List<Recipe> getRecipeRepository() {
+        return recipeRepository.getAllRecipes();
+    }
+
+    @Override
+    public List<Recipe> getRecipeByType(final RecipeType type) {
+        return recipeRepository.getAllRecipes()
                 .stream()
                 .filter(recipe -> recipe.getDishType().equals(type))
                 .collect(Collectors.toList());
 
     }
 
-    public boolean addRecipe(String name, String description, RecipeType type, List<Product> products) {
+    @Override
+    public boolean addRecipe(final String name, final String description,
+                             final RecipeType type, final List<Product> products) {
         if (!StringUtils.isBlank(name)) {
             Recipe recipe = Recipe.RecipeBuilder.aRecipe()
                     .withName(name)
@@ -37,15 +43,16 @@ public class RecipeService {
                     .withDishType(type)
                     .withProducts(products)
                     .build();
-            recipes.addRecipe(recipe);
+            recipeRepository.addRecipe(recipe);
             return true;
         }
         return false;
     }
 
-    public boolean addRecipe(Recipe recipe) {
+    @Override
+    public boolean addRecipe(final Recipe recipe) {
         if (!StringUtils.isBlank(recipe.getName())) {
-            recipes.addRecipe(recipe);
+            recipeRepository.addRecipe(recipe);
             return true;
         }
         return false;

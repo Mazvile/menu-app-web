@@ -1,4 +1,4 @@
-package com.mazvile.menuappweb.dao;
+package com.mazvile.menuappweb.repository;
 
 import com.mazvile.menuappweb.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Repository
-public class RecipeDAO {
+public class RecipeRepository {
 
     @Autowired
     private DataSource dataSource;

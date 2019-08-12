@@ -1,4 +1,4 @@
-package com.mazvile.menuappweb.dao;
+package com.mazvile.menuappweb.repository;
 
 import com.mazvile.menuappweb.model.Product;
 import com.mazvile.menuappweb.model.Units;
@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Repository
-public class SuppliesDAO {
+public class SupplyRepository {
 
     @Autowired
     private DataSource dataSource;

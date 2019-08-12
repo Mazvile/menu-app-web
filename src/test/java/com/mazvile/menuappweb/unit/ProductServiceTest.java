@@ -1,7 +1,7 @@
 package com.mazvile.menuappweb.unit;
 
-import com.mazvile.menuappweb.dao.ProductsDAO;
-import com.mazvile.menuappweb.logic.ProductService;
+import com.mazvile.menuappweb.repository.ProductRepository;
+import com.mazvile.menuappweb.service.product.ProductServiceImpl;
 
 import com.mazvile.menuappweb.model.Product;
 import com.mazvile.menuappweb.model.Units;
@@ -23,21 +23,21 @@ import static org.mockito.Mockito.when;
 public class ProductServiceTest {
 
     @Mock
-    private ProductsDAO productsDAO;
+    private ProductRepository productRepository;
 
     @InjectMocks
-    private ProductService service;
+    private ProductServiceImpl service;
 
     @Test
     public void addProductWithNewNameShouldReturnTrue() {
-        when(productsDAO.insertProduct(any(Product.class))).thenReturn(1);
+        when(productRepository.insertProduct(any(Product.class))).thenReturn(1);
         assertTrue(service.addProduct("Flour", Units.GRAMS));
     }
 
     @Test
     public void addProductWithExistingNameShouldReturnFalse() {
         List<Product> products = Arrays.asList(Product.ProductBuilder.aProduct().withName("Flour").build());
-        when(productsDAO.getAllProducts()).thenReturn(products);
+        when(productRepository.getAllProducts()).thenReturn(products);
         assertFalse(service.addProduct("Flour", Units.GRAMS));
         assertFalse(service.addProduct("flour", Units.GRAMS));
         assertFalse(service.addProduct(" Flour ", Units.GRAMS));

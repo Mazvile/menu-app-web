@@ -1,8 +1,8 @@
 package com.mazvile.menuappweb.unit;
 
-import com.mazvile.menuappweb.logic.MenuService;
-import com.mazvile.menuappweb.logic.RecipeService;
-import com.mazvile.menuappweb.logic.SuppliesService;
+import com.mazvile.menuappweb.service.menu.MenuServiceImpl;
+import com.mazvile.menuappweb.service.recipe.RecipeServiceImpl;
+import com.mazvile.menuappweb.service.supply.SupplyServiceImpl;
 import com.mazvile.menuappweb.model.Menu;
 import com.mazvile.menuappweb.model.Recipe;
 import com.mazvile.menuappweb.model.RecipeType;
@@ -31,13 +31,13 @@ public class ParameterizedMenuServiceTest {
     public MockitoRule rule = MockitoJUnit.rule();
 
     @Mock
-    private RecipeService recipeBook;
+    private RecipeServiceImpl recipeBook;
 
     @Mock
-    private SuppliesService supplies;
+    private SupplyServiceImpl supplies;
 
     @InjectMocks
-    private MenuService service;
+    private MenuServiceImpl service;
 
     @Parameter(0)
     public RecipeType dishType;
