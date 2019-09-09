@@ -27,9 +27,6 @@
             <column name="quantity" type="int">
                 <constraints nullable="false"/>
             </column>
-            <column name="units" type="varchar(10)">
-                <constraints nullable="false"/>
-            </column>
         </createTable>
 
         <createTable tableName="recipe">
@@ -43,6 +40,21 @@
                 <constraints nullable="false"/>
             </column>
             <column name="type" type="varchar(10)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="recipe_product">
+            <column name="id" type="UUID">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="recipe_id" type="UUID">
+                <constraints nullable="false" foreignKeyName="fk_recipe_product_recipe" references="recipe(id)"/>
+            </column>
+            <column name="product_id" type="UUID">
+                <constraints nullable="false" foreignKeyName="fk_recipe_product_product" references="product(id)"/>
+            </column>
+            <column name="quantity" type="int">
                 <constraints nullable="false"/>
             </column>
         </createTable>
