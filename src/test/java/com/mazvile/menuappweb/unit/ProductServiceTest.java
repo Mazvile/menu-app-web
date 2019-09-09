@@ -14,8 +14,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
@@ -30,17 +29,24 @@ public class ProductServiceTest {
 
     @Test
     public void addProductWithNewNameShouldReturnTrue() {
-        when(productRepository.insertProduct(any(Product.class))).thenReturn(1);
-        assertTrue(service.addProduct("Flour", Units.GRAMS));
+        Product product = Product.ProductBuilder.aProduct()
+                .withName("Flour")
+                .withUnits(Units.GRAMS)
+                .build();
+
+        when(productRepository.save(any(Product.class))).thenReturn(product);
+        assertEquals(product, service.addProduct("Flour", Units.GRAMS));
     }
 
     @Test
     public void addProductWithExistingNameShouldReturnFalse() {
         List<Product> products = Arrays.asList(Product.ProductBuilder.aProduct().withName("Flour").build());
-        when(productRepository.getAllProducts()).thenReturn(products);
-        assertFalse(service.addProduct("Flour", Units.GRAMS));
-        assertFalse(service.addProduct("flour", Units.GRAMS));
-        assertFalse(service.addProduct(" Flour ", Units.GRAMS));
+
+        when(productRepository.findAll()).thenReturn(products);
+
+        assertEquals(products.get(0), service.addProduct("Flour", Units.GRAMS));
+        assertEquals(products.get(0), service.addProduct("flour", Units.GRAMS));
+        assertEquals(products.get(0), service.addProduct(" Flour ", Units.GRAMS));
     }
 
     @Test(expected = IllegalArgumentException.class)

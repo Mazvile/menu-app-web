@@ -7,9 +7,9 @@ import java.util.List;
 
 public interface ProductService {
 
-    boolean addProduct(String name, Units units);
+    Product addProduct(String name, Units units);
 
-    boolean deleteProduct(Product product);
+    void deleteProduct(Product product);
 
     List<Product> getAllProducts();
 }

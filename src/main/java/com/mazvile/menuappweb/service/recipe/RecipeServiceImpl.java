@@ -1,6 +1,6 @@
 package com.mazvile.menuappweb.service.recipe;
 
-import com.mazvile.menuappweb.entity.Product;
+import com.mazvile.menuappweb.entity.Ingredient;
 import com.mazvile.menuappweb.entity.Recipe;
 import com.mazvile.menuappweb.model.RecipeType;
 import com.mazvile.menuappweb.repository.RecipeRepository;
@@ -21,12 +21,12 @@ public class RecipeServiceImpl implements RecipeService {
 
     @Override
     public List<Recipe> getRecipeRepository() {
-        return recipeRepository.getAllRecipes();
+        return recipeRepository.findAll();
     }
 
     @Override
     public List<Recipe> getRecipeByType(final RecipeType type) {
-        return recipeRepository.getAllRecipes()
+        return recipeRepository.findAll()
                 .stream()
                 .filter(recipe -> recipe.getDishType().equals(type))
                 .collect(Collectors.toList());
@@ -34,27 +34,25 @@ public class RecipeServiceImpl implements RecipeService {
     }
 
     @Override
-    public boolean addRecipe(final String name, final String description,
-                             final RecipeType type, final List<Product> products) {
+    public Recipe addRecipe(final String name, final String description,
+                            final RecipeType type, final List<Ingredient> ingredients) {
         if (!StringUtils.isBlank(name)) {
             Recipe recipe = Recipe.RecipeBuilder.aRecipe()
                     .withName(name)
                     .withDescription(description)
                     .withDishType(type)
-                    .withProducts(products)
+                    .withProducts(ingredients)
                     .build();
-            recipeRepository.addRecipe(recipe);
-            return true;
+            return recipeRepository.save(recipe);
         }
-        return false;
+        throw new Error("Name not valid");
     }
 
     @Override
-    public boolean addRecipe(final Recipe recipe) {
+    public Recipe addRecipe(final Recipe recipe) {
         if (!StringUtils.isBlank(recipe.getName())) {
-            recipeRepository.addRecipe(recipe);
-            return true;
+            return recipeRepository.save(recipe);
         }
-        return false;
+        throw new Error("Name not valid");
     }
 }

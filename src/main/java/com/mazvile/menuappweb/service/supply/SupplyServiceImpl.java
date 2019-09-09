@@ -1,5 +1,7 @@
 package com.mazvile.menuappweb.service.supply;
 
+import com.mazvile.menuappweb.entity.Ingredient;
+import com.mazvile.menuappweb.entity.Supply;
 import com.mazvile.menuappweb.repository.SupplyRepository;
 import com.mazvile.menuappweb.model.Menu;
 import com.mazvile.menuappweb.entity.Product;
@@ -8,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class SupplyServiceImpl implements SupplyService {
@@ -19,85 +22,92 @@ public class SupplyServiceImpl implements SupplyService {
     }
 
     @Override
-    public void addSupply(final Product product) {
-        this.supplyRepository.addProduct(product);
+    public Supply addSupply(final Supply supply) {
+        return supplyRepository.save(supply);
     }
 
     @Override
-    public void removeSupply(final Product product) {
-        this.supplyRepository.removeProduct(product);
+    public void removeSupply(final Supply supply) {
+        this.supplyRepository.delete(supply);
     }
 
     @Override
-    public List<Product> getAllSupplies() {
-        return supplyRepository.getAllSupplies();
+    public List<Supply> getAllSupplies() {
+        return supplyRepository.findAll();
     }
 
     @Override
     public boolean canIMakeThisRecipe(final Recipe recipe) {
-        final List<Product> requiredProducts = recipe.getProducts();
+        final List<Ingredient> ingredients = recipe.getIngredients();
         int counter = 0;
-        for (Product product : requiredProducts) {
-            for (Product supply : supplyRepository.getAllSupplies()) {
-                if ((product.getId().equals(supply.getId())) &&
-                        (product.getQuantity().getValue() <= supply.getQuantity().getValue())) {
+        for (Ingredient ingredient : ingredients) {
+            for (Supply supply : supplyRepository.findAll()) {
+                if ((ingredient.getIngredient().getId().equals(supply.getSupply().getId())) &&
+                        (ingredient.getQuantity() <= supply.getQuantity())) {
                     counter++;
                 }
             }
         }
-        return counter == requiredProducts.size();
+        return counter == ingredients.size();
     }
 
     @Override
-    public List<Product> productsToBuy(final Menu menu) {
+    public List<Supply> productsToBuy(final Menu menu) {
         final List<Recipe> menuRecipes = menu.getMenuRecipes();
-        final List<Product> productsNeeded = new ArrayList<>();
+        final List<Supply> productsNeeded = new ArrayList<>();
         for (Recipe recipe : menuRecipes) {
-            productsNeeded.addAll(recipe.getProducts());
+            productsNeeded.addAll(recipe.getIngredients()
+                    .stream()
+                    .map(ingredient -> Supply.SupplyBuilder
+                            .aSupply()
+                            .withSupply(ingredient.getIngredient())
+                            .withQuantity(ingredient.getQuantity())
+                            .build())
+                    .collect(Collectors.toList()));
         }
-        final List<Product> optimizedProducts = sumSameProducts(productsNeeded);
+        final List<Supply> optimizedProducts = sumSameProducts(productsNeeded);
 
         return subtractSupplies(optimizedProducts);
     }
 
-    private List<Product> subtractSupplies(final List<Product> productsNeeded) {
-        final List<Product> result = new ArrayList<>();
+    private List<Supply> subtractSupplies(final List<Supply> productsNeeded) {
+        final List<Supply> result = new ArrayList<>();
 
-        for (Product product : productsNeeded) {
-            for (Product supply : supplyRepository.getAllSupplies()) {
-                if (product.getId().equals(supply.getId())) {
-                    final int val1 = product.getQuantity().getValue();
-                    final int val2 = supply.getQuantity().getValue();
+        for (Supply product : productsNeeded) {
+            for (Supply supply : supplyRepository.findAll()) {
+                if (product.getSupply().getId().equals(supply.getSupply().getId())) {
+                    final int val1 = product.getQuantity();
+                    final int val2 = supply.getQuantity();
 
-                    product.getQuantity().setValue(val1 - val2);
+                    product.setQuantity(val1 - val2);
                 }
             }
-            if (product.getQuantity().getValue() > 0) {
+            if (product.getQuantity() > 0) {
                 result.add(product);
             }
         }
         return result;
     }
 
-    private List<Product> sumSameProducts(final List<Product> products) {
-        final List<Product> optimizedProductList = new ArrayList<>();
+    private List<Supply> sumSameProducts(final List<Supply> supplies) {
+        final List<Supply> optimizedSupplies = new ArrayList<>();
 
-        while (!products.isEmpty()) {
-            final Product productTaken = products.remove(0);
+        while (!supplies.isEmpty()) {
+            final Supply productTaken = supplies.remove(0);
             boolean alreadyInList = false;
-            for (Product optProduct : optimizedProductList) {
-                if (productTaken.getId().equals(optProduct.getId())) {
-                    final int value1 = optProduct.getQuantity().getValue();
-                    final int value2 = productTaken.getQuantity().getValue();
+            for (Supply supply : optimizedSupplies) {
+                if (productTaken.getSupply().getId().equals(supply.getSupply().getId())) {
+                    final int value1 = supply.getQuantity();
+                    final int value2 = productTaken.getQuantity();
 
-                    optProduct.getQuantity().setValue(value1 + value2);
+                    supply.setQuantity(value1 + value2);
                     alreadyInList = true;
                 }
             }
             if (!alreadyInList) {
-                optimizedProductList.add(productTaken);
+                optimizedSupplies.add(productTaken);
             }
         }
-        return optimizedProductList;
+        return optimizedSupplies;
     }
 }

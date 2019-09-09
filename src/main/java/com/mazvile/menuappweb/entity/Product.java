@@ -1,33 +1,45 @@
-package com.mazvile.menuappweb.model;
+package com.mazvile.menuappweb.entity;
 
+import com.mazvile.menuappweb.model.Quantity;
+import com.mazvile.menuappweb.model.Units;
+import org.hibernate.annotations.Type;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import java.util.UUID;
+
+@Entity
 public class Product {
 
-    private Integer id;
+    @Id
+    @GeneratedValue
+    @Type(type = "pg-uuid")
+    @Column(name = "id", columnDefinition = "uuid")
+    private UUID id;
+
+    @Column(name = "name", nullable = false)
     private String name;
-    private Quantity quantity;
+
+    @Column(name = "units", nullable = false)
+    private Units units;
 
     public String getName() {
         return name;
     }
 
-    public Quantity getQuantity() {
-        return quantity;
-    }
 
-    public Integer getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 
-    public void setQuantityValue(int value) {
-        this.quantity.setValue(value);
-    }
-
     public static final class ProductBuilder {
-        private Integer id;
+        private UUID id;
         private String name;
         private Quantity quantity = new Quantity();
 
@@ -38,7 +50,7 @@ public class Product {
             return new ProductBuilder();
         }
 
-        public ProductBuilder withId(Integer id) {
+        public ProductBuilder withId(UUID id) {
             this.id = id;
             return this;
         }
@@ -66,7 +78,7 @@ public class Product {
         public Product build() {
             Product product = new Product();
             product.setId(id);
-            product.quantity = this.quantity;
+            product.units = this.quantity.getUnit();
             product.name = this.name;
             return product;
         }

@@ -20,37 +20,34 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public boolean addProduct(final String name, final Units units) {
+    public Product addProduct(final String name, final Units units) {
         if (units == null) {
             throw new IllegalArgumentException("Units cannot be null");
         }
         if (name == null || StringUtils.isBlank(name)) {
             throw new IllegalArgumentException("Name cannot be null or blank");
         }
-        for (Product product : productRepository.getAllProducts()) {
+        for (Product product : productRepository.findAll()) {
             if (product.getName().equalsIgnoreCase(name.trim())) {
-                return false;
+                return product;
             }
         }
 
-        final int result = productRepository.insertProduct(Product.ProductBuilder.aProduct()
+        return productRepository.save(Product.ProductBuilder.aProduct()
                 .withName(name)
                 .withUnits(units)
                 .build());
-
-        return result != 0;
     }
 
 
     @Override
-    public boolean deleteProduct(final Product product) {
-        final int result = productRepository.deleteProduct(product);
-        return result != 0;
+    public void deleteProduct(final Product product) {
+        productRepository.delete(product);
     }
 
     @Override
     public List<Product> getAllProducts() {
-        return productRepository.getAllProducts();
+        return productRepository.findAll();
     }
 
     private String beautifyName(String uglyName) {

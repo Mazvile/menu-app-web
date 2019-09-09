@@ -1,20 +1,20 @@
 package com.mazvile.menuappweb.service.supply;
 
-import com.mazvile.menuappweb.model.Menu;
-import com.mazvile.menuappweb.entity.Product;
 import com.mazvile.menuappweb.entity.Recipe;
+import com.mazvile.menuappweb.entity.Supply;
+import com.mazvile.menuappweb.model.Menu;
 
 import java.util.List;
 
 public interface SupplyService {
 
-    void addSupply(Product product);
+    Supply addSupply(Supply supply);
 
-    void removeSupply(Product product);
+    void removeSupply(Supply supply);
 
-    List<Product> getAllSupplies();
+    List<Supply> getAllSupplies();
 
     boolean canIMakeThisRecipe(Recipe recipe);
 
-    List<Product> productsToBuy(Menu menu);
+    List<Supply> productsToBuy(Menu menu);
 }
