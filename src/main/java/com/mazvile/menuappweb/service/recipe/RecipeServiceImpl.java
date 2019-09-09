@@ -1,7 +1,7 @@
 package com.mazvile.menuappweb.service.recipe;
 
-import com.mazvile.menuappweb.model.Product;
-import com.mazvile.menuappweb.model.Recipe;
+import com.mazvile.menuappweb.entity.Product;
+import com.mazvile.menuappweb.entity.Recipe;
 import com.mazvile.menuappweb.model.RecipeType;
 import com.mazvile.menuappweb.repository.RecipeRepository;
 import org.apache.commons.lang3.StringUtils;

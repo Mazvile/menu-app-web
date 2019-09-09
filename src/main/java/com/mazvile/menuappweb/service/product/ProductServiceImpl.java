@@ -1,6 +1,6 @@
 package com.mazvile.menuappweb.service.product;
 
-import com.mazvile.menuappweb.model.Product;
+import com.mazvile.menuappweb.entity.Product;
 import com.mazvile.menuappweb.model.Units;
 import com.mazvile.menuappweb.repository.ProductRepository;
 import org.apache.commons.lang3.StringUtils;

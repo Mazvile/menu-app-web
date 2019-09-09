@@ -1,5 +1,7 @@
 package com.mazvile.menuappweb.model;
 
+import com.mazvile.menuappweb.entity.Recipe;
+
 import java.util.List;
 
 public class Menu {

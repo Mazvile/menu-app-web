@@ -1,6 +1,6 @@
 package com.mazvile.menuappweb.repository;
 
-import com.mazvile.menuappweb.model.Product;
+import com.mazvile.menuappweb.entity.Product;
 import com.mazvile.menuappweb.model.Units;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;

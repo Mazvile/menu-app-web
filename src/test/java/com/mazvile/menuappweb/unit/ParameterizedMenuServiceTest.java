@@ -4,7 +4,7 @@ import com.mazvile.menuappweb.service.menu.MenuServiceImpl;
 import com.mazvile.menuappweb.service.recipe.RecipeServiceImpl;
 import com.mazvile.menuappweb.service.supply.SupplyServiceImpl;
 import com.mazvile.menuappweb.model.Menu;
-import com.mazvile.menuappweb.model.Recipe;
+import com.mazvile.menuappweb.entity.Recipe;
 import com.mazvile.menuappweb.model.RecipeType;
 import org.junit.Rule;
 import org.junit.Test;
