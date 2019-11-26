@@ -3,7 +3,9 @@ package com.mazvile.menuappweb.unit;
 import com.mazvile.menuappweb.model.Menu;
 import com.mazvile.menuappweb.model.RecipeType;
 import com.mazvile.menuappweb.service.menu.MenuServiceImpl;
+import com.mazvile.menuappweb.service.recipe.RecipeService;
 import com.mazvile.menuappweb.service.recipe.RecipeServiceImpl;
+import com.mazvile.menuappweb.service.supply.SupplyService;
 import com.mazvile.menuappweb.service.supply.SupplyServiceImpl;
 import com.mazvile.menuappweb.entity.*;
 import org.junit.Test;
@@ -22,10 +24,10 @@ import static org.mockito.Mockito.when;
 public class MenuServiceTest {
 
     @Mock
-    private RecipeServiceImpl recipeBook;
+    private RecipeService recipeBook;
 
     @Mock
-    private SupplyServiceImpl supplies;
+    private SupplyService supplies;
 
     @InjectMocks
     private MenuServiceImpl service;

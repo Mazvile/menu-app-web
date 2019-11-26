@@ -4,8 +4,8 @@ package com.mazvile.menuappweb.service.menu;
 import com.mazvile.menuappweb.model.Menu;
 import com.mazvile.menuappweb.entity.Recipe;
 import com.mazvile.menuappweb.model.RecipeType;
-import com.mazvile.menuappweb.service.recipe.RecipeServiceImpl;
-import com.mazvile.menuappweb.service.supply.SupplyServiceImpl;
+import com.mazvile.menuappweb.service.recipe.RecipeService;
+import com.mazvile.menuappweb.service.supply.SupplyService;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -16,14 +16,14 @@ import java.util.stream.Collectors;
 @Service
 public class MenuServiceImpl implements MenuService {
 
-    private final RecipeServiceImpl recipeServiceImpl;
+    private final RecipeService recipeService;
 
-    private final SupplyServiceImpl supplyService;
+    private final SupplyService supplyService;
 
     private final Random rn = new Random();
 
-    public MenuServiceImpl(final RecipeServiceImpl recipeServiceImpl, final SupplyServiceImpl supplyService) {
-        this.recipeServiceImpl = recipeServiceImpl;
+    public MenuServiceImpl(final RecipeService recipeService, final SupplyService supplyService) {
+        this.recipeService = recipeService;
         this.supplyService = supplyService;
     }
 
@@ -35,13 +35,13 @@ public class MenuServiceImpl implements MenuService {
             final int numberOfVeggieDishes) {
 
         final List<Recipe> selectedFishDishes =
-                getRandomDishes(recipeServiceImpl.getRecipeByType(RecipeType.FISH), numberOfFishDishes);
+                getRandomDishes(recipeService.getRecipeByType(RecipeType.FISH), numberOfFishDishes);
         final List<Recipe> selectedMeatDishes =
-                getRandomDishes(recipeServiceImpl.getRecipeByType(RecipeType.MEAT), numberOfMeatDishes);
+                getRandomDishes(recipeService.getRecipeByType(RecipeType.MEAT), numberOfMeatDishes);
         final List<Recipe> selectedPoultryDishes =
-                getRandomDishes(recipeServiceImpl.getRecipeByType(RecipeType.POULTRY), numberOfPoultryDishes);
+                getRandomDishes(recipeService.getRecipeByType(RecipeType.POULTRY), numberOfPoultryDishes);
         final List<Recipe> selectedVeggieDishes =
-                getRandomDishes(recipeServiceImpl.getRecipeByType(RecipeType.VEGETARIAN), numberOfVeggieDishes);
+                getRandomDishes(recipeService.getRecipeByType(RecipeType.VEGETARIAN), numberOfVeggieDishes);
 
         final List<Recipe> allMenuRecipes = new ArrayList<>();
 
@@ -55,15 +55,15 @@ public class MenuServiceImpl implements MenuService {
 
     @Override
     public Menu makeRandomMenu(final int numberOfDishes) {
-        final List<Recipe> randomDishes = getRandomDishes(recipeServiceImpl.getRecipeRepository(), numberOfDishes);
+        final List<Recipe> randomDishes = getRandomDishes(recipeService.getRecipeRepository(), numberOfDishes);
         return new Menu(randomDishes);
     }
 
     @Override
     public List<Recipe> getAvailableRecipes() {
-        return recipeServiceImpl.getRecipeRepository()
+        return recipeService.getRecipeRepository()
                 .stream()
-                .filter(recipe -> supplyService.canIMakeThisRecipe(recipe))
+                .filter(supplyService::canIMakeThisRecipe)
                 .collect(Collectors.toList());
     }
 

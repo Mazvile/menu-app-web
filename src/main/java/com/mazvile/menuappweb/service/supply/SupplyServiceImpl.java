@@ -1,11 +1,10 @@
 package com.mazvile.menuappweb.service.supply;
 
 import com.mazvile.menuappweb.entity.Ingredient;
-import com.mazvile.menuappweb.entity.Supply;
-import com.mazvile.menuappweb.repository.SupplyRepository;
-import com.mazvile.menuappweb.model.Menu;
-import com.mazvile.menuappweb.entity.Product;
 import com.mazvile.menuappweb.entity.Recipe;
+import com.mazvile.menuappweb.entity.Supply;
+import com.mazvile.menuappweb.model.Menu;
+import com.mazvile.menuappweb.repository.SupplyRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
