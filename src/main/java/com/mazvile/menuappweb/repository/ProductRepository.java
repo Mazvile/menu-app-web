@@ -1,6 +1,6 @@
 package com.mazvile.menuappweb.repository;
 
-import com.mazvile.menuappweb.entity.Product;
+import com.mazvile.menuappweb.repository.entity.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -8,5 +8,6 @@ import java.util.UUID;
 
 @Repository
 public interface ProductRepository extends JpaRepository<Product, UUID> {
+
 
 }

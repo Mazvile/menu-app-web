@@ -2,8 +2,8 @@ package com.mazvile.menuappweb.service.menu;
 
 
 import com.mazvile.menuappweb.model.Menu;
-import com.mazvile.menuappweb.entity.Recipe;
-import com.mazvile.menuappweb.model.RecipeType;
+import com.mazvile.menuappweb.repository.entity.Recipe;
+import com.mazvile.menuappweb.model.enums.RecipeType;
 import com.mazvile.menuappweb.service.recipe.RecipeService;
 import com.mazvile.menuappweb.service.supply.SupplyService;
 import org.springframework.stereotype.Service;

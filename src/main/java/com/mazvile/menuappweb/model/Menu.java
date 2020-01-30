@@ -1,6 +1,6 @@
 package com.mazvile.menuappweb.model;
 
-import com.mazvile.menuappweb.entity.Recipe;
+import com.mazvile.menuappweb.repository.entity.Recipe;
 
 import java.util.List;
 

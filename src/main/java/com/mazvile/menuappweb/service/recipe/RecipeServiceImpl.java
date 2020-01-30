@@ -1,13 +1,14 @@
 package com.mazvile.menuappweb.service.recipe;
 
-import com.mazvile.menuappweb.entity.Ingredient;
-import com.mazvile.menuappweb.entity.Recipe;
-import com.mazvile.menuappweb.model.RecipeType;
+import com.mazvile.menuappweb.repository.entity.Ingredient;
+import com.mazvile.menuappweb.repository.entity.Recipe;
+import com.mazvile.menuappweb.model.enums.RecipeType;
 import com.mazvile.menuappweb.repository.RecipeRepository;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -35,7 +36,7 @@ public class RecipeServiceImpl implements RecipeService {
 
     @Override
     public Recipe addRecipe(final String name, final String description,
-                            final RecipeType type, final List<Ingredient> ingredients) {
+                            final RecipeType type, final Set<Ingredient> ingredients) {
         if (!StringUtils.isBlank(name)) {
             Recipe recipe = Recipe.RecipeBuilder.aRecipe()
                     .withName(name)
@@ -47,6 +48,8 @@ public class RecipeServiceImpl implements RecipeService {
         }
         throw new Error("Name not valid");
     }
+
+
 
     @Override
     public Recipe addRecipe(final Recipe recipe) {

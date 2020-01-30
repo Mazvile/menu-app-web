@@ -3,8 +3,8 @@ package com.mazvile.menuappweb.unit;
 import com.mazvile.menuappweb.repository.ProductRepository;
 import com.mazvile.menuappweb.service.product.ProductServiceImpl;
 
-import com.mazvile.menuappweb.entity.Product;
-import com.mazvile.menuappweb.model.Units;
+import com.mazvile.menuappweb.repository.entity.Product;
+import com.mazvile.menuappweb.model.enums.Units;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;

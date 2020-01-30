@@ -1,7 +1,7 @@
 package com.mazvile.menuappweb.service.product;
 
-import com.mazvile.menuappweb.entity.Product;
-import com.mazvile.menuappweb.model.Units;
+import com.mazvile.menuappweb.repository.entity.Product;
+import com.mazvile.menuappweb.model.enums.Units;
 import com.mazvile.menuappweb.repository.ProductRepository;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
@@ -37,6 +37,11 @@ public class ProductServiceImpl implements ProductService {
                 .withName(name)
                 .withUnits(units)
                 .build());
+    }
+
+    @Override
+    public Product addProduct(final Product product) {
+        return productRepository.save(product);
     }
 
 

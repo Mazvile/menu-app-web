@@ -1,14 +1,15 @@
 package com.mazvile.menuappweb.service.supply;
 
-import com.mazvile.menuappweb.entity.Ingredient;
-import com.mazvile.menuappweb.entity.Recipe;
-import com.mazvile.menuappweb.entity.Supply;
 import com.mazvile.menuappweb.model.Menu;
 import com.mazvile.menuappweb.repository.SupplyRepository;
+import com.mazvile.menuappweb.repository.entity.Ingredient;
+import com.mazvile.menuappweb.repository.entity.Recipe;
+import com.mazvile.menuappweb.repository.entity.Supply;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -37,11 +38,11 @@ public class SupplyServiceImpl implements SupplyService {
 
     @Override
     public boolean canIMakeThisRecipe(final Recipe recipe) {
-        final List<Ingredient> ingredients = recipe.getIngredients();
+        final Set<Ingredient> ingredients = recipe.getIngredients();
         int counter = 0;
         for (Ingredient ingredient : ingredients) {
             for (Supply supply : supplyRepository.findAll()) {
-                if ((ingredient.getIngredient().getId().equals(supply.getSupply().getId())) &&
+                if ((ingredient.getProduct().getId().equals(supply.getSupply().getId())) &&
                         (ingredient.getQuantity() <= supply.getQuantity())) {
                     counter++;
                 }
@@ -59,7 +60,7 @@ public class SupplyServiceImpl implements SupplyService {
                     .stream()
                     .map(ingredient -> Supply.SupplyBuilder
                             .aSupply()
-                            .withSupply(ingredient.getIngredient())
+                            .withSupply(ingredient.getProduct())
                             .withQuantity(ingredient.getQuantity())
                             .build())
                     .collect(Collectors.toList()));

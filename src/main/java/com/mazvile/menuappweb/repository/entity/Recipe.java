@@ -1,10 +1,10 @@
-package com.mazvile.menuappweb.entity;
+package com.mazvile.menuappweb.repository.entity;
 
-import com.mazvile.menuappweb.model.RecipeType;
+import com.mazvile.menuappweb.model.enums.RecipeType;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
-import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -17,19 +17,19 @@ public class Recipe {
     @Column(name = "id", columnDefinition = "uuid")
     private UUID id;
 
-    @Column(name="name", nullable=false)
+    @Column(name = "name", nullable = false)
     private String name;
 
-    @Column(name="description", nullable=false)
+    @Column(name = "description", nullable = false)
     private String description;
 
-    @Column(name="type", nullable=false)
+    @Column(name = "type", nullable = false)
     @Enumerated(EnumType.STRING)
     private RecipeType dishType;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(name = "ingredient")
-    private List<Ingredient> products;
+    private Set<Ingredient> products;
 
     public UUID getId() {
         return id;
@@ -63,11 +63,11 @@ public class Recipe {
         this.dishType = dishType;
     }
 
-    public List<Ingredient> getIngredients() {
+    public Set<Ingredient> getIngredients() {
         return products;
     }
 
-    public void setProducts(List<Ingredient> products) {
+    public void setProducts(Set<Ingredient> products) {
         this.products = products;
     }
 
@@ -77,7 +77,7 @@ public class Recipe {
         private String name;
         private String description;
         private RecipeType dishType;
-        private List<Ingredient> products;
+        private Set<Ingredient> products;
 
         private RecipeBuilder() {
         }
@@ -106,7 +106,7 @@ public class Recipe {
             return this;
         }
 
-        public RecipeBuilder withProducts(List<Ingredient> products) {
+        public RecipeBuilder withProducts(Set<Ingredient> products) {
             this.products = products;
             return this;
         }

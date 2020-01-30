@@ -1,13 +1,9 @@
-package com.mazvile.menuappweb.entity;
+package com.mazvile.menuappweb.repository.entity;
 
-import com.mazvile.menuappweb.model.Quantity;
-import com.mazvile.menuappweb.model.Units;
+import com.mazvile.menuappweb.model.enums.Units;
 import org.hibernate.annotations.Type;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.UUID;
 
 @Entity
@@ -22,6 +18,7 @@ public class Product {
     @Column(name = "name", nullable = false)
     private String name;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "units", nullable = false)
     private Units units;
 
@@ -38,10 +35,14 @@ public class Product {
         this.id = id;
     }
 
+    public Units getUnits() {
+        return units;
+    }
+
     public static final class ProductBuilder {
         private UUID id;
         private String name;
-        private Quantity quantity = new Quantity();
+        private Units units;
 
         private ProductBuilder() {
         }
@@ -60,27 +61,18 @@ public class Product {
             return this;
         }
 
-        public ProductBuilder withQuantity(Quantity quantity) {
-            this.quantity = quantity;
-            return this;
-        }
-
         public ProductBuilder withUnits(Units units) {
-            this.quantity.setUnit(units);
-            return this;
-        }
-
-        public ProductBuilder withValue(int value) {
-            this.quantity.setValue(value);
+            this.units = units;
             return this;
         }
 
         public Product build() {
             Product product = new Product();
             product.setId(id);
-            product.units = this.quantity.getUnit();
             product.name = this.name;
+            product.units = this.units;
             return product;
         }
     }
+
 }

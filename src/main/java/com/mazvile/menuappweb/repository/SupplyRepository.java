@@ -1,6 +1,6 @@
 package com.mazvile.menuappweb.repository;
 
-import com.mazvile.menuappweb.entity.Supply;
+import com.mazvile.menuappweb.repository.entity.Supply;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

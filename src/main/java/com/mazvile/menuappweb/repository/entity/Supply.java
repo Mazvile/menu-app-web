@@ -1,4 +1,4 @@
-package com.mazvile.menuappweb.entity;
+package com.mazvile.menuappweb.repository.entity;
 
 import org.hibernate.annotations.Type;
 

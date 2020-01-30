@@ -1,4 +1,4 @@
-package com.mazvile.menuappweb.model;
+package com.mazvile.menuappweb.model.enums;
 
 public enum RecipeType {
 

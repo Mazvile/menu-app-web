@@ -1,5 +1,7 @@
 package com.mazvile.menuappweb.model;
 
+import com.mazvile.menuappweb.model.enums.Units;
+
 public class Quantity {
 
     private int value;

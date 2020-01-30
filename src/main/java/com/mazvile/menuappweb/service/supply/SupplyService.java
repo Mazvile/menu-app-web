@@ -1,7 +1,7 @@
 package com.mazvile.menuappweb.service.supply;
 
-import com.mazvile.menuappweb.entity.Recipe;
-import com.mazvile.menuappweb.entity.Supply;
+import com.mazvile.menuappweb.repository.entity.Recipe;
+import com.mazvile.menuappweb.repository.entity.Supply;
 import com.mazvile.menuappweb.model.Menu;
 
 import java.util.List;
